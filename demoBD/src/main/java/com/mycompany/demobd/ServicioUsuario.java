@@ -1,5 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+                      * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.demobd;
@@ -139,7 +139,7 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
 
         UsuarioTO retorno = null;
         try {
-            ps = getConection().prepareStatement("SELECT correo,clave FROM USUARIO WHERE correo = ? and clave = ?");
+            ps = getConection().prepareStatement("SELECT correo,clave,rol FROM USUARIO WHERE correo = ? and clave = ?");
             ps.setString(1, correo);
             ps.setString(2, clave);
             rs = ps.executeQuery();
@@ -147,7 +147,8 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
 
                 correo = rs.getString("correo");
                  clave = rs.getString("clave");
-                retorno = new UsuarioTO(correo, clave);
+                  String rol = rs.getString("rol");
+                retorno = new UsuarioTO(correo, clave,rol);
 
             }
         } catch (Exception e) {
@@ -161,6 +162,4 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
 
     }
    
-    
-
 }

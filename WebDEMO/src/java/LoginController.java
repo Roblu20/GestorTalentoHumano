@@ -32,6 +32,7 @@ import org.primefaces.PrimeFaces;
 public class LoginController implements Serializable {
 
     private String correo;
+    private String rol;
     private String clave;
     private String nombre;
     private String apellidos;
@@ -40,6 +41,8 @@ public class LoginController implements Serializable {
     private ServicioUsuario su;
     private boolean esNuevo = false;
     private UsuarioTO selectedUsuario = new UsuarioTO();
+
+    
 
     public void insertar() {
 
@@ -85,7 +88,7 @@ public class LoginController implements Serializable {
 
     public UsuarioTO validacionUsuario() {
 
-        UsuarioTO retorne = new UsuarioTO(this.correo, this.clave);
+        UsuarioTO retorne = new UsuarioTO(correo, clave);
 
         try {
 
@@ -93,7 +96,15 @@ public class LoginController implements Serializable {
 
             retorne = su.demeUsuario(correo, clave);
             if (retorne != null) {
-                this.redireccionar("/faces/bienvenida.xhtml");
+                String rol= retorne.getRol();
+                if (rol.equals("administrador")){
+                    this.redireccionar("/faces/bienvenida.xhtml");
+                
+            }
+                else if (rol.equals("usuario")){
+                 this.redireccionar("/faces/bienvenidausuario.xhtml");
+            }
+            
 
             } else {
                 FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "No Existe en la base de datos", "No Existe en la base de datos"));

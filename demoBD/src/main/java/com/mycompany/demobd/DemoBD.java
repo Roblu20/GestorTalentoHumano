@@ -19,20 +19,32 @@ public class DemoBD {
     private static Connection conn = null;
 
     public static void main(String[] args) {
+       String correo = "c";
+        String clave = "1";
+
+        // Crear una instancia de la clase que contiene el método demeUsuario()
+        ServicioUsuario servicioUsuario = new ServicioUsuario();
+        
+        
+        
         try {
-            UsuarioTO usuarioTO_1 = new UsuarioTO("test", "Jose Andres");
+           // UsuarioTO usuarioTO_1 = new UsuarioTO("test", "Jose Andres");
             //insertar(usuarioTO_1);
 
             //usuarioTO_1 = new UsuarioTO(6, "Mariana");
             //insertar(usuarioTO_1);
             //usuarioTO_1 = new UsuarioTO(1, "CARLOS");
-            modificar(usuarioTO_1);
+           // modificar(usuarioTO_1);
 
             //usuarioTO_1 = new UsuarioTO(5, "Carlos");
             //eliminar(usuarioTO_1);
-            List<UsuarioTO> listaRetorno = demeUsuarios();
-            for (UsuarioTO usuarioTO : listaRetorno) {
-                System.out.println("ID: " + usuarioTO.getCorreo() + " Nombre: " + usuarioTO.getClave());
+            // Llamar al método demeUsuario() para verificar las credenciales en la base de datos
+            UsuarioTO resultado = servicioUsuario.demeUsuario(correo, clave);
+
+            if (resultado != null) {
+                System.out.println("Credenciales válidas. Usuario encontrado en la base de datos.");
+            } else {
+                System.out.println("Credenciales inválidas. No se encontró el usuario en la base de datos.");
             }
 
         //    System.out.println("Este es el nombre: " + demeUsuario().getNombre());

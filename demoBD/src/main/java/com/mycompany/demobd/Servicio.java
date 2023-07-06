@@ -24,7 +24,7 @@ public abstract class Servicio {
 //Paso 1
         Class.forName("com.mysql.cj.jdbc.Driver");
         //Paso 2
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto2?serverTimezone=UTC", "root", "1738420");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto2?user=root", "root", "root");
         System.out.println("CONEXION: " + conn);
         return conn;
     }

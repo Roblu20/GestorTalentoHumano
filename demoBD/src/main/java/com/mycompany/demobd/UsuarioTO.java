@@ -17,6 +17,7 @@ public class UsuarioTO implements Serializable {
     private String nombre;
     private String apellido;
     private String estado;
+    private String rol;
 
     public UsuarioTO() {
     }
@@ -25,6 +26,22 @@ public class UsuarioTO implements Serializable {
         this.correo = correo;
         this.clave = clave;
     }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public UsuarioTO(String correo, String clave, String rol) {
+        this.correo = correo;
+        this.clave = clave;
+        this.rol = rol;
+    }
+
+   
     
 
     public UsuarioTO(String correo, String clave, String nombre, String apellido, String estado) {
