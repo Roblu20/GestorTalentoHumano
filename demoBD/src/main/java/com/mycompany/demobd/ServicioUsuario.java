@@ -40,19 +40,19 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
             super.cerrar(conn);
         }
     }
-    
-     public void modificar(UsuarioTO usuarioTO) throws SQLException, Exception {
+
+    public void modificar(UsuarioTO usuarioTO) throws SQLException, Exception {
 
         PreparedStatement ps = null;
         Connection conn = super.getConection();
         try {
 
-            ps = super.getConection().prepareStatement("UPDATE proyecto2.usuario SET nombre = ?,clave = ?, apellido = ? WHERE correo = ?");
+            ps = super.getConection().prepareStatement("UPDATE proyecto2.usuario SET nombre = ?,clave = ?, apellido = ? WHERE correo = '?'");
             ps.setString(1, usuarioTO.getNombre());
             ps.setString(2, usuarioTO.getClave());
             ps.setString(3, usuarioTO.getApellido());
             ps.setString(4, usuarioTO.getCorreo());
-            
+
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -65,13 +65,37 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
         }
     }
 
+    public void eliminar(UsuarioTO usuarioTO) {
+            PreparedStatement ps = null;
+
+        try {
+            Connection conn = super.getConection();
+            ps = getConection().prepareStatement(
+                    "UPDATE proyecto2.usuario SET estado = 'inactivo' WHERE correo = ?");
+            ps.setString(1, usuarioTO.getCorreo());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.close();
+                    ps = null;
+                }
+            } catch (Exception e) {
+                 e.printStackTrace();
+            }
+
+        }
+
+    }
+
     /**
      *
-     * @return
-     * @throws Exception
+     * @return @throws Exception
      */
-    
-    public List<UsuarioTO> demeUsuarios() throws SQLException,Exception {
+    public List<UsuarioTO> demeUsuarios() throws SQLException, Exception {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -79,15 +103,16 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
 
         List<UsuarioTO> retorno = new ArrayList<UsuarioTO>();
         try {
-            ps = getConection().prepareStatement("SELECT correo,nombre,apellido,estado FROM USUARIO");
+            ps = getConection().prepareStatement("SELECT correo,clave,nombre,apellido,estado FROM USUARIO WHERE ESTADO = 'ACTIVO'");
             rs = ps.executeQuery();
             while (rs.next()) {
-               
+
                 String correo = rs.getString("correo");
+                String clave = rs.getString("clave");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String estado = rs.getString("estado");
-                UsuarioTO usuarioTO = new UsuarioTO(correo,nombre,apellido,estado);
+                UsuarioTO usuarioTO = new UsuarioTO(correo, clave, nombre, apellido, estado);
                 retorno.add(usuarioTO);
             }
         } catch (Exception e) {
@@ -100,7 +125,6 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
         return retorno;
 
     }
-
 
     public UsuarioTO demeUsuario(int pk) throws SQLException, Exception {
 
@@ -130,7 +154,7 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
         return retorno;
 
     }
-    
+
     public UsuarioTO demeUsuario(String correo, String clave) throws SQLException, Exception {
 
         PreparedStatement ps = null;
@@ -146,7 +170,7 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
             if (rs.next()) {
 
                 correo = rs.getString("correo");
-                 clave = rs.getString("clave");
+                clave = rs.getString("clave");
                 retorno = new UsuarioTO(correo, clave);
 
             }
@@ -160,7 +184,5 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
         return retorno;
 
     }
-   
-    
 
 }

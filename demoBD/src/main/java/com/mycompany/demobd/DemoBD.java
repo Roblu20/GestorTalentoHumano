@@ -29,7 +29,7 @@ public class DemoBD {
             modificar(usuarioTO_1);
 
             //usuarioTO_1 = new UsuarioTO(5, "Carlos");
-            //eliminar(usuarioTO_1);
+            eliminar(usuarioTO_1);
             List<UsuarioTO> listaRetorno = demeUsuarios();
             for (UsuarioTO usuarioTO : listaRetorno) {
                 System.out.println("ID: " + usuarioTO.getCorreo() + " Nombre: " + usuarioTO.getClave());

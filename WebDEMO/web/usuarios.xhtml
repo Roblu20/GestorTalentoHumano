@@ -8,7 +8,7 @@
         <title>Users</title>
     </h:head>
     <h:body>
-        
+
 
         <div class="card">
             <p:tabMenu activeIndex="#{param.i}">
@@ -36,15 +36,17 @@
                 <p:dataTable var="usuario" value="#{loginController.usuarios}" paginator="true" 
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rows="20">
-                    <p:column headerText="Correo">
+                    <p:column headerText="Correo" sortBy="#{usuario.correo}" filterBy="#{usuario.correo}" filterMatchMode="contains">
                         <h:outputText value="#{usuario.correo}" />
                     </p:column>
-
-                    <p:column headerText="Nombre">
+                    <p:column headerText="Clave" sortBy="#{usuario.clave}" filterBy="#{usuario.clave}" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.clave}" />
+                    </p:column>
+                    <p:column headerText="Nombre" sortBy="#{usuario.nombre}" filterBy="#{usuario.nombre}" filterMatchMode="contains">
                         <h:outputText value="#{usuario.nombre}" />
                     </p:column>
 
-                    <p:column headerText="Apellidos">
+                    <p:column headerText="Apellidos" sortBy="#{usuario.apellido}" filterBy="#{usuario.apellido}" filterMatchMode="contains">
                         <h:outputText value="#{usuario.apellido}" />
                     </p:column>
 
@@ -57,15 +59,23 @@
                                          styleClass="edit-button rounded-button ui-button-success" process="@this">
                             <f:setPropertyActionListener value="#{usuario}" target="#{loginController.selectedUsuario}"/>
                             <p:resetInput target=":form:manage-user-contentEdit"/>
-                            
+
                         </p:commandButton>
+                        
+                        <p:commandButton  icon="pi pi-times" update=":form:manage-user-contentDelete"
+                                         oncomplete="PF('manageUserDialogDelete').show()"
+                                         styleClass="rounded-button ui-button-danger" process="@this">
+                            <f:setPropertyActionListener value="#{usuario}" target="#{loginController.selectedUsuario}"/>
+                            <p:resetInput target=":form:manage-user-contentDelete"/>
+                        </p:commandButton>
+                                             
                     </p:column>
                 </p:dataTable>
 
 
             </div>
-            
-             <!-- Boton de Crear usuario - Empieza-->
+
+            <!-- Boton de Crear usuario - Empieza-->
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
                       widgetVar="manageUserDialogAgregar" responsive="true">
@@ -76,44 +86,44 @@
 
                     <p:outputPanel>
                         <div class="p-field">
-                            <p:outputLabel for="mail">Correo</p:outputLabel>
-                            <p:inputText id="mail" required="true" value="#{loginController.selectedUsuario.correo}"/>
+                            <p:outputLabel for="mail2">Correo</p:outputLabel>
+                            <p:inputText id="mail2" required="true" value="#{loginController.selectedUsuario.correo}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="pass">Clave</p:outputLabel>
-                            <p:inputText id="pass" required="true" value="#{loginController.selectedUsuario.clave}"/>
+                            <p:outputLabel for="pass2">Clave</p:outputLabel>
+                            <p:inputText id="pass2" required="true" value="#{loginController.selectedUsuario.clave}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="name">Nombre</p:outputLabel>
-                            <p:inputText id="name" required="true" value="#{loginController.selectedUsuario.nombre}"/>
+                            <p:outputLabel for="name2">Nombre</p:outputLabel>
+                            <p:inputText id="name2" required="true" value="#{loginController.selectedUsuario.nombre}"/>
                         </div>
-                         <div class="p-field">
-                            <p:outputLabel for="surname">Apellido</p:outputLabel>
-                            <p:inputText id="surname" required="true" value="#{loginController.selectedUsuario.apellido}"/>
+                        <div class="p-field">
+                            <p:outputLabel for="surname2">Apellido</p:outputLabel>
+                            <p:inputText id="surname2" required="true" value="#{loginController.selectedUsuario.apellido}"/>
                         </div>
 
 
                     </p:outputPanel>
 
-                   
+
                 </p:outputPanel>
-                 
+
                 <f:facet name="footer">     
-                    <p:commandButton value="Guardar" icon="pi pi-check"  actionListener="#{loginController.saveUser}"
+                    <p:commandButton value="Guardar" icon="pi pi-check"  actionListener="#{loginController.saveUser()}"
                                      update="form manage-user-contentAgregar" process="manage-user-contentAgregar @this"/>         
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUserDialogAgregar').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
-                   
+
             </p:dialog>
-             
-             
-              <!-- Boton de crear usuario - Termina-->
-          
-            
+
+
+            <!-- Boton de crear usuario - Termina-->
+
+
             <!-- Boton de editar usuario - Empieza-->
-            
-             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
+
+            <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
                       widgetVar="manageUserDialogEdit" responsive="true">
                 <p:outputPanel id="manage-user-contentEdit" class="ui-fluid">
 
@@ -133,7 +143,7 @@
                             <p:outputLabel for="name">Nombre</p:outputLabel>
                             <p:inputText id="name" value="#{loginController.selectedUsuario.nombre}"/>
                         </div>
-                         <div class="p-field">
+                        <div class="p-field">
                             <p:outputLabel for="surname">Apellido</p:outputLabel>
                             <p:inputText id="surname" value="#{loginController.selectedUsuario.apellido}"/>
                         </div>
@@ -141,21 +151,62 @@
 
                     </p:outputPanel>
 
-                   
+
                 </p:outputPanel>
-                 
+
                 <f:facet name="footer">       
                     <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{loginController.updateUser}"
                                      update="form manage-user-contentEdit" process="manage-user-contentEdit @this"/>     
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUserDialogEdit').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
-                   
-            </p:dialog>
-            
-             <!-- Boton de editar usuario  - Termina-->
-            
 
+            </p:dialog>
+
+            <!-- Boton de editar usuario  - Termina-->
+
+            <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
+                      widgetVar="manageUserDialogDelete" responsive="true">
+                <p:outputPanel id="manage-user-contentDelete" class="ui-fluid">
+
+
+
+
+                    <p:outputPanel>
+                        <div class="p-field">
+                            <p:outputLabel for="mail3">Correo</p:outputLabel>
+                            <p:inputText id="mail3" disabled="true"  value="#{loginController.selectedUsuario.correo}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="pass3">Clave</p:outputLabel>
+                            <p:inputText id="pass3" disabled="true" value="#{loginController.selectedUsuario.clave}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="name3">Nombre</p:outputLabel>
+                            <p:inputText id="name3" disabled="true" value="#{loginController.selectedUsuario.nombre}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="surname3">Apellido</p:outputLabel>
+                            <p:inputText id="surname3" disabled="true" value="#{loginController.selectedUsuario.apellido}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel>ESTA SEGURO DE ELIMINAR ESTE USUARIO?</p:outputLabel>
+
+                        </div>
+
+                    </p:outputPanel>
+
+
+                </p:outputPanel>
+
+                <f:facet name="footer">       
+                    <p:commandButton value="Eliminar" icon="pi pi-check" actionListener="#{loginController.deleteUser()}"
+                                     update="form manage-user-contentDelete" process="manage-user-contentDelete @this"/>     
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUserDialogDelete').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+
+            </p:dialog>
         </h:form>
     </h:body>
 </html>

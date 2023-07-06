@@ -48,12 +48,12 @@ public class LoginController implements Serializable {
         System.out.println("EL VALOR DE CLAVE ES:" + this.getClave());
         boolean continuar = true;
         if (this.getCorreo() == null || this.getCorreo().equals("")) {
-            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos inválidos", "El usuario no es correcto"));
+            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos inválidos", "El usuario o la clave no son correctas"));
             continuar = false;
         }
         if (this.getClave() == null || this.getClave().equals("")) {
 
-            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos inválidos", "La clave no es correcto"));
+            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos inválidos", "El usuario o la clave no son correctas"));
             continuar = false;
         }
         if (continuar) {
@@ -113,6 +113,7 @@ public class LoginController implements Serializable {
         System.out.println("Estoy salvando al usuario");
         try {
             ServicioUsuario su = new ServicioUsuario();
+            
             su.insertar(selectedUsuario);
             this.usuarios.add(selectedUsuario);//para simular       
             
@@ -141,6 +142,22 @@ public class LoginController implements Serializable {
         }
     
     }
+    
+    public void deleteUser(){
+    System.out.println("Estoy eliminando al usuario");
+        try {
+            ServicioUsuario su = new ServicioUsuario();
+            su.eliminar(selectedUsuario);                          
+            mostrarUsuarios();
+        } catch (Exception ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
+    
+    
+    
     
  public void openNew() {
         this.esNuevo = true;
