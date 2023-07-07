@@ -47,7 +47,7 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
         Connection conn = super.getConection();
         try {
 
-            ps = super.getConection().prepareStatement("UPDATE proyecto2.usuario SET nombre = ?,clave = ?, apellido = ? WHERE correo = '?'");
+            ps = super.getConection().prepareStatement("UPDATE proyecto2.usuario SET nombre = ?,clave = ?, apellido = ? WHERE correo = ?");
             ps.setString(1, usuarioTO.getNombre());
             ps.setString(2, usuarioTO.getClave());
             ps.setString(3, usuarioTO.getApellido());

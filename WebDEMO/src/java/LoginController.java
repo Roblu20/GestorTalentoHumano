@@ -108,9 +108,10 @@ public class LoginController implements Serializable {
         return retorne;
 
     }
-
+    
     public void saveUser() {
-        System.out.println("Estoy salvando al usuario");
+        
+        
         try {
             ServicioUsuario su = new ServicioUsuario();
             
@@ -124,6 +125,7 @@ public class LoginController implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nuevo Usuario", "Nuevo Usuario Agregado Correctamente"));
         //---this.servicioUsuario.listarUsuarios();
 
     }
@@ -140,6 +142,7 @@ public class LoginController implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario Editado", "Usuario Editado Correctamente"));
     
     }
     
@@ -152,7 +155,8 @@ public class LoginController implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario Eliminado", "Usuario Eliminado Correctamente"));
+
     }
     
     
