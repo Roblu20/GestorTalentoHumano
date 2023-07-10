@@ -24,12 +24,13 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
         Connection conn = super.getConection();
         try {
 
-            ps = super.getConection().prepareStatement("INSERT INTO usuario VALUES(?,?,?,?,?)");
+            ps = super.getConection().prepareStatement("INSERT INTO usuario VALUES(?,?,?,?,?,?)");
             ps.setString(1, usuarioTO.getCorreo());
             ps.setString(2, usuarioTO.getClave());
             ps.setString(3, usuarioTO.getNombre());
             ps.setString(4, usuarioTO.getApellido());
             ps.setString(5, "activo");
+            ps.setString(6, usuarioTO.getRol());
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -47,11 +48,13 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
         Connection conn = super.getConection();
         try {
 
-            ps = super.getConection().prepareStatement("UPDATE proyecto2.usuario SET nombre = ?,clave = ?, apellido = ? WHERE correo = ?");
+            ps = super.getConection().prepareStatement("UPDATE proyecto2.usuario SET nombre = ?,clave = ?, apellido = ?, rol = ? WHERE correo = ?");
             ps.setString(1, usuarioTO.getNombre());
             ps.setString(2, usuarioTO.getClave());
             ps.setString(3, usuarioTO.getApellido());
-            ps.setString(4, usuarioTO.getCorreo());
+            ps.setString(4, usuarioTO.getRol());
+            ps.setString(5, usuarioTO.getCorreo());
+            
 
             ps.executeUpdate();
 
@@ -103,7 +106,7 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
 
         List<UsuarioTO> retorno = new ArrayList<UsuarioTO>();
         try {
-            ps = getConection().prepareStatement("SELECT correo,clave,nombre,apellido,estado FROM USUARIO WHERE ESTADO = 'ACTIVO'");
+            ps = getConection().prepareStatement("SELECT correo,clave,nombre,apellido,estado,rol FROM USUARIO WHERE ESTADO = 'ACTIVO'");
             rs = ps.executeQuery();
             while (rs.next()) {
 
@@ -112,7 +115,8 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String estado = rs.getString("estado");
-                UsuarioTO usuarioTO = new UsuarioTO(correo, clave, nombre, apellido, estado);
+                String rol = rs.getString("rol");
+                UsuarioTO usuarioTO = new UsuarioTO(correo, clave, nombre, apellido, estado,rol);
                 retorno.add(usuarioTO);
             }
         } catch (Exception e) {
@@ -126,7 +130,7 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
 
     }
 
-    public UsuarioTO demeUsuario(int pk) throws SQLException, Exception {
+   /* public UsuarioTO demeUsuario(int pk) throws SQLException, Exception {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -153,9 +157,9 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
         }
         return retorno;
 
-    }
+    }*/
 
-    public UsuarioTO demeUsuario(String correo, String clave) throws SQLException, Exception {
+    public UsuarioTO demeUsuario(String correo, String clave, String rol) throws SQLException, Exception {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -163,7 +167,7 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
 
         UsuarioTO retorno = null;
         try {
-            ps = getConection().prepareStatement("SELECT correo,clave FROM USUARIO WHERE correo = ? and clave = ?");
+            ps = getConection().prepareStatement("SELECT correo,clave,rol FROM USUARIO WHERE correo = ? and clave = ?");
             ps.setString(1, correo);
             ps.setString(2, clave);
             rs = ps.executeQuery();
@@ -171,7 +175,8 @@ public class ServicioUsuario extends Servicio implements ICrud<UsuarioTO> {
 
                 correo = rs.getString("correo");
                 clave = rs.getString("clave");
-                retorno = new UsuarioTO(correo, clave);
+                rol = rs.getString("rol");
+                retorno = new UsuarioTO(correo, clave, rol);
 
             }
         } catch (Exception e) {

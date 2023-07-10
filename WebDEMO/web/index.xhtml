@@ -11,11 +11,11 @@
 
         <h:form>
             <p:growl id="mensaje" showDetail="true"/>
-            <p:panelGrid columns="2">
+            <p:panelGrid columns="2" style=" margin: 0 auto;margin-top: 15%"  >
                 Usuario: <p:inputText value="#{loginController.correo}" />
                 Clave: <p:password value="#{loginController.clave}"/>
                 <h:outputText/>
-                <p:commandButton value="Ingresar" actionListener="#{loginController.insertar()}" update="mensaje"/>
+                <p:commandButton value="Ingresar"  actionListener="#{loginController.insertar()}" update="mensaje"/>
             </p:panelGrid>
 
         </h:form>

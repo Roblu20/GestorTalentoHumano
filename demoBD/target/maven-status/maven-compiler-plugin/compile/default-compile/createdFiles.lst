@@ -1,8 +1,10 @@
 com\mycompany\demobd\BasicView.class
+com\mycompany\demobd\PermisoTO.class
 com\mycompany\demobd\Servicio.class
 com\mycompany\demobd\UsuarioService.class
 com\mycompany\demobd\UsuarioTO.class
 com\mycompany\demobd\TesterServicio.class
 com\mycompany\demobd\DemoBD.class
+ServicioPermiso.class
 com\mycompany\demobd\ServicioUsuario.class
 com\mycompany\demobd\ICrud.class

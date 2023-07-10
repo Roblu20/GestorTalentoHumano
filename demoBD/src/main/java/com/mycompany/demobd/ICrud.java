@@ -12,7 +12,6 @@ import java.util.List;
  */
 public interface ICrud < T >{
     
-    public void insertar(T Objeto) throws Exception;
-    public List<T> demeUsuarios()throws Exception;
+   
     
 }

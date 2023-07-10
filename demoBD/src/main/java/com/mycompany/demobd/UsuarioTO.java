@@ -17,13 +17,15 @@ public class UsuarioTO implements Serializable {
     private String nombre;
     private String apellido;
     private String estado;
+    private String rol;
 
     public UsuarioTO() {
     }
 
-    public UsuarioTO(String correo, String clave) {
+    public UsuarioTO(String correo, String clave,String rol) {
         this.correo = correo;
         this.clave = clave;
+        this.rol = rol;
     }
     
 
@@ -34,12 +36,22 @@ public class UsuarioTO implements Serializable {
         this.apellido = apellido;
         this.estado = estado;
     }
+    
 
     public UsuarioTO(String correo, String nombre, String apellido, String estado) {
         this.correo = correo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.estado = estado;
+    }
+
+    public UsuarioTO(String correo, String clave, String nombre, String apellido, String estado, String rol) {
+        this.correo = correo;
+        this.clave = clave;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.estado = estado;
+        this.rol = rol;
     }
     
 
@@ -81,6 +93,14 @@ public class UsuarioTO implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
 }

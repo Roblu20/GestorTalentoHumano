@@ -20,7 +20,7 @@ public class DemoBD {
 
     public static void main(String[] args) {
         try {
-            UsuarioTO usuarioTO_1 = new UsuarioTO("test", "Jose Andres");
+            UsuarioTO usuarioTO_1 = new UsuarioTO("test", "Jose Andres","admin");
             //insertar(usuarioTO_1);
 
             //usuarioTO_1 = new UsuarioTO(6, "Mariana");
@@ -153,8 +153,9 @@ public class DemoBD {
 
                 String id = rs.getString("id");
                 String nombre = rs.getString("nombre");
-                UsuarioTO usuarioTO = new UsuarioTO(id, nombre);
-                retorno.add(usuarioTO);
+                
+                //UsuarioTO usuarioTO = new UsuarioTO(id, nombre, rol);
+                //retorno.add(usuarioTO);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -188,7 +189,7 @@ public class DemoBD {
 
                 String id = rs.getString("id");
                 String nombre = rs.getString("nombre");
-                retorno = new UsuarioTO(id, nombre);
+               // retorno = new UsuarioTO(id, nombre);
 
             }
         } catch (Exception e) {
