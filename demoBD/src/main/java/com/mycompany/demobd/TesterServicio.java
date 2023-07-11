@@ -14,14 +14,14 @@ public class TesterServicio {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        /*try {
+        try {
             ServicioUsuario su = new ServicioUsuario();
             for (UsuarioTO u : su.demeUsuarios()) {
                 System.out.println("Nombre: "+ u.getClave());
                 
             }
         } catch (Exception e) {
-        }*/
+        }
     }
     
 }
